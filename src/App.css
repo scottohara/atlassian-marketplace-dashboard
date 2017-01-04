@@ -1,0 +1,46 @@
+body {
+	font-family: "Verdana";
+	font-size: 12px;
+}
+table, th, td {
+  border: 1px black solid;
+  border-collapse: collapse;
+  padding: 3px;
+}
+
+tbody {
+	border: 3px black solid;
+}
+
+td.transactions {
+	text-align: right;
+	min-width: 80px;
+}
+
+td.addon, th.addon {
+	border-left: 3px solid black;
+}
+
+label {
+	font-weight: bold;
+}
+
+input {
+	margin: 5px;
+}
+
+span.logged-in {
+	color: green;
+}
+
+span.logged-in:after {
+	content: "\2714";
+}
+
+span.logged-out {
+	color: darkred;
+}
+
+span.logged-out:after {
+	content: "\2716";
+}
