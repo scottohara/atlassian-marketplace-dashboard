@@ -2,6 +2,7 @@
   "name": "atlassian-marketplace-dashboard",
   "version": "0.1.0",
   "private": true,
+	"homepage": "https://scottohara.github.io/atlassian-marketplace-dashboard/",
   "devDependencies": {
     "react-scripts": "0.8.4"
   },
