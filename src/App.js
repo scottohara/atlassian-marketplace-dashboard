@@ -164,7 +164,7 @@ class MarketplaceDashboardRow extends Component {
 	renderTransactions(transactions) {
 		const {sales, renewals, upgrades, refunds} = transactions,
 					total = {
-						count: sales.count + renewals.count + upgrades.count - refunds.count,
+						count: sales.count + renewals.count + upgrades.count + refunds.count,
 						amount: sales.amount + renewals.amount + upgrades.amount + refunds.amount
 					};
 
@@ -209,7 +209,7 @@ class MarketplaceDashboardFooter extends Component {
 					total.upgrades.amount += addon.cloud[tier].upgrades.amount;
 					total.refunds.count += addon.cloud[tier].refunds.count;
 					total.refunds.amount += addon.cloud[tier].refunds.amount;
-					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count - total.refunds.count;
+					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count + total.refunds.count;
 					total.total.amount = total.sales.amount + total.renewals.amount + total.upgrades.amount + total.refunds.amount;
 
 					return total;
@@ -223,7 +223,7 @@ class MarketplaceDashboardFooter extends Component {
 					total.upgrades.amount += addon.server[tier].upgrades.amount;
 					total.refunds.count += addon.server[tier].refunds.count;
 					total.refunds.amount += addon.server[tier].refunds.amount;
-					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count - total.refunds.count;
+					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count + total.refunds.count;
 					total.total.amount = total.sales.amount + total.renewals.amount + total.upgrades.amount + total.refunds.amount;
 
 					return total;
@@ -241,7 +241,7 @@ class MarketplaceDashboardFooter extends Component {
 					total.upgrades.amount += addon.total[type].upgrades.amount;
 					total.refunds.count += addon.total[type].refunds.count;
 					total.refunds.amount += addon.total[type].refunds.amount;
-					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count - total.refunds.count;
+					total.total.count = total.sales.count + total.renewals.count + total.upgrades.count + total.refunds.count;
 					total.total.amount = total.sales.amount + total.renewals.amount + total.upgrades.amount + total.refunds.amount;
 
 					return total;
