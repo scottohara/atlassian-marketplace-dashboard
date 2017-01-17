@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import './App.css';
+import loadingSpinner from './ring.svg';
 
 class MarketplaceDashboardLogin extends Component {
 	constructor(props) {
@@ -55,6 +56,11 @@ class MarketplaceDashboardRange extends Component {
 		this.state = {startDate, endDate};
 		this.handleStartDateChange = this.handleStartDateChange.bind(this);
 		this.handleEndDateChange = this.handleEndDateChange.bind(this);
+		this.yesterday = this.yesterday.bind(this);
+		this.previousDay = this.previousDay.bind(this);
+		this.nextDay = this.nextDay.bind(this);
+		this.monthToDate = this.monthToDate.bind(this);
+		this.previousMonth = this.previousMonth.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
@@ -64,6 +70,59 @@ class MarketplaceDashboardRange extends Component {
 
 	handleEndDateChange(event) {
 		this.setState({endDate: event.target.value});
+	}
+
+	yesterday(event) {
+		let yesterday = new Date();
+		yesterday.setDate(yesterday.getDate() - 1);
+		yesterday = yesterday.toISOString().substr(0, 10);
+		this.setState({startDate: yesterday, endDate: yesterday});
+		event.preventDefault();
+	}
+
+	adjustDay(days) {
+		let startDate = new Date(this.state.startDate),
+				endDate = new Date(this.state.endDate);
+
+		startDate.setDate(startDate.getDate() + days);
+		startDate = startDate.toISOString().substr(0, 10);
+		endDate.setDate(endDate.getDate() + days);
+		endDate = endDate.toISOString().substr(0, 10);
+		this.setState({startDate, endDate});
+	}
+	previousDay(event) {
+		this.adjustDay(-1);
+		event.preventDefault();
+	}
+
+	nextDay(event) {
+		this.adjustDay(+1);
+		event.preventDefault();
+	}
+
+	monthToDate(event) {
+		let startDate = new Date(this.state.startDate),
+				endDate = new Date();
+
+		startDate.setDate(1);
+		startDate = startDate.toISOString().substr(0, 10);
+		endDate.setDate(endDate.getDate() - 1);
+		endDate = endDate.toISOString().substr(0, 10);
+		this.setState({startDate, endDate});
+		event.preventDefault();
+	}
+
+	previousMonth(event) {
+		let startDate = new Date(),
+				endDate = new Date();
+
+		startDate.setDate(1);
+		startDate.setMonth(startDate.getMonth() - 1);
+		startDate = startDate.toISOString().substr(0, 10);
+		endDate.setDate(0);
+		endDate = endDate.toISOString().substr(0, 10);
+		this.setState({startDate, endDate});
+		event.preventDefault();
 	}
 
 	handleSubmit(event) {
@@ -82,8 +141,14 @@ class MarketplaceDashboardRange extends Component {
 					End Date:
 					<input type="date" value={this.state.endDate} onChange={this.handleEndDateChange}/>
 				</label>
+				<a href="#" onClick={this.yesterday}>[Yesterday]</a>
+				<a href="#" onClick={this.previousDay}>[  &lt;  ]</a>
+				<a href="#" onClick={this.nextDay}>[  &gt;  ]</a>
+				<a href="#" onClick={this.monthToDate}>[Month to Date]</a>
+				<a href="#" onClick={this.previousMonth}>[Last Month]</a>
 				<input type="submit" value="Submit" disabled={!this.props.isLoggedIn}/>
-				<span>{this.props.numTransactions} transactions</span>
+				<img height="20" width="20" className={this.props.loading ? "loading" : "loaded"} src={loadingSpinner} alt="loading"/>
+				<span> {this.props.numTransactions} transactions</span>
 			</form>
 		);
 	}
@@ -316,7 +381,7 @@ class App extends Component {
 		this.fetchData(startDate, endDate)
 			.then(this.transform)
 			.then(this.merge.bind(this))
-			.then(data => this.setState({startDate, endDate, data}))
+			.then(data => this.setState({startDate, endDate, data, loading: false}))
 	}
 
 	initialTiers(tiers, tier) {
@@ -332,18 +397,18 @@ class App extends Component {
 	}
 
 	initialState() {
-		const today = new Date();
 		let yesterday = new Date();
-
 		yesterday.setDate(yesterday.getDate() - 1);
+		yesterday = yesterday.toISOString().substr(0, 10);
 
 		return {
 			userName: window.localStorage.getItem("atlassian-id") || "",
 			password: window.localStorage.getItem("atlassian-password") || "",
 			isLoggedIn: false,
-			startDate: yesterday.toISOString().substr(0, 10),
-			endDate: today.toISOString().substr(0, 10),
+			startDate: yesterday,
+			endDate: yesterday,
 			numTransactions: 0,
+			loading: false,
 			addOns: [
 				this.initialAddOn("Open API Documentation for Confluence"),
 				this.initialAddOn("Sequence Diagrams for Confluence"),
@@ -362,6 +427,8 @@ class App extends Component {
 					headers = {Authorization: `Basic ${credentials}`},
 					baseUrl = "https://atlassian-marketplace-proxy.herokuapp.com",  // http://marketplace.atlassian.com
 					url = `${baseUrl}/rest/2/vendors/1212012/reporting/sales/transactions?limit=50&offset=${offset}&startDate=${startDate}&endDate=${endDate}`;
+
+		this.setState({loading: true});
 
 		return fetch(url, {headers})
 			.then(response => response.json())
@@ -432,6 +499,7 @@ class App extends Component {
 					endDate={this.state.endDate}
 					isLoggedIn={this.state.isLoggedIn}
 					numTransactions={this.state.numTransactions}
+					loading={this.state.loading}
 				/>
 				<MarketplaceDashboard addons={this.state.addOns}/>
 			</div>

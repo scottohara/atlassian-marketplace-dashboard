@@ -44,3 +44,15 @@ span.logged-out {
 span.logged-out:after {
 	content: "\2716";
 }
+
+img.loaded {
+	visibility: hidden;
+}
+
+img.loading {
+	visibility: visible;
+}
+
+a {
+	margin: 0 2px;
+}
