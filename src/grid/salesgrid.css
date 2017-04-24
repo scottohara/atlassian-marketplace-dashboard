@@ -2,13 +2,13 @@ body {
 	font-family: "Verdana";
 	font-size: 12px;
 }
-table, th, td {
+table.marketplace-dashboard, .marketplace-dashboard th, .marketplace-dashboard td {
   border: 1px black solid;
   border-collapse: collapse;
   padding: 3px;
 }
 
-tbody {
+.marketplace-dashboard tbody {
 	border: 3px black solid;
 }
 

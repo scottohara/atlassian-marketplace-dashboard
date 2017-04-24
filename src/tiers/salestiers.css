@@ -1,0 +1,25 @@
+.addon-sales-tiers {
+	width: 100%;
+	border-top: 1px solid;
+}
+
+.addon-sales-tiers > .addon-sales-type {
+	font-size: 18px;
+	text-align: center;
+}
+
+.addon-sales-tier-name {
+	text-align: left;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+th, td {
+	font-size: 10px;
+	margin: 0;
+	padding: 2px;
+	text-align: right;
+	width: 20%;
+}

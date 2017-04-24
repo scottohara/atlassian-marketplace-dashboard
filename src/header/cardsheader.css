@@ -1,0 +1,15 @@
+header {
+	background: linear-gradient(to left,#79589f,#5a5d9f);
+	font-size: 16px;
+	color: #fff;
+	padding: 4px 7px;
+}
+
+.settings-menu {
+	padding: 3px 0;
+	color: inherit;
+	font-size: inherit;
+	float: right;
+	background-color: transparent;
+	border: 0;
+}

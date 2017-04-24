@@ -1,0 +1,16 @@
+.date-range-form {
+	display: inline;
+}
+
+.range-arrow, .refresh-button {
+	vertical-align: middle;
+	padding: 3px;
+	color: inherit;
+	font-size: inherit;
+	background-color: transparent;
+	border: 0;
+}
+
+.refresh-button[disabled] {
+	color: #888;
+}

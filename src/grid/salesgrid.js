@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './salesgrid.css';
 import loadingSpinner from './ring.svg';
 
 class MarketplaceDashboardLogin extends Component {
@@ -352,7 +352,7 @@ class MarketplaceDashboard extends Component {
 		const {addons} = this.props;
 
 		return (
-			<table>
+			<table className="marketplace-dashboard">
 				<MarketplaceDashboardHeader addons={addons}/>
 				<MarketplaceCloudSales addons={addons}/>
 				<MarketplaceServerSales addons={addons}/>
@@ -362,7 +362,7 @@ class MarketplaceDashboard extends Component {
 	}
 }
 
-class App extends Component {
+export default class AddOnSalesGrid extends Component {
 	constructor(props) {
 		super(props);
 		this.cloudTiers = [10,15,25,50,100,500,2000];
@@ -506,5 +506,3 @@ class App extends Component {
 		);
 	}
 }
-
-export default App;
