@@ -1,12 +1,6 @@
-import React, { Component } from "react";
+import React from "react";
 import "./logo.css";
 
-export default class AddOnLogo extends Component {
-	render() {
-		const {logo} = this.props;
+const AddOnLogo = ({logo}) => (<img alt="logo" className="addon-logo" src={logo}/>);
 
-		return (
-			<img alt="logo" className="addon-logo" src={logo}/>
-		);
-	}
-}
+export default AddOnLogo;

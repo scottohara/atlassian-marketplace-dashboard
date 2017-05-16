@@ -9,7 +9,7 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.refresh = this.refresh.bind(this);
-		this.state = {vendors: []};
+		this.state = {vendors: [], loading: false};
 	}
 
 	componentDidMount() {
@@ -17,15 +17,16 @@ export default class App extends Component {
 	}
 
 	refresh() {
-		DataService.refresh().then(vendors => this.setState({vendors}));
+		this.setState({loading: true});
+		DataService.refresh().then(vendors => this.setState({vendors, loading: false}));
 	}
 
 	render() {
-		const {vendors} = this.state;
+		const {vendors, loading} = this.state;
 
 		return (
 			<div>
-				<AddOnCardsHeader refresh={this.refresh}/>
+				<AddOnCardsHeader refresh={this.refresh} loading={loading}/>
 				<AddOnSalesCards vendors={vendors}/>
 			</div>
 		);

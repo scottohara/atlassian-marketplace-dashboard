@@ -1,21 +1,17 @@
-import React, { Component } from "react";
+import React from "react";
 import AddOnSalesSubtotal from "./salessubtotal";
 import "./salessubtotals.css";
 
-export default class AddOnSalesSubtotals extends Component {
-	render() {
-		const {subtotals} = this.props;
+const AddOnSalesSubtotals = ({subtotals}) => (
+	<div className="addon-sales-subtotals">
+		{subtotals.map(subtotal => {
+			const {type, amount, count} = subtotal;
 
-		return (
-			<div className="addon-sales-subtotals">
-				{subtotals.map(subtotal => {
-					const {type, amount, count} = subtotal;
+			return (
+				<AddOnSalesSubtotal key={type} type={type} amount={amount} count={count}/>
+			)
+		})}
+	</div>
+);
 
-					return (
-						<AddOnSalesSubtotal key={type} type={type} amount={amount} count={count}/>
-					)
-				})}
-			</div>
-		);
-	}
-}
+export default AddOnSalesSubtotals;

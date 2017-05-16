@@ -1,12 +1,10 @@
-import React, { Component } from "react";
+import React from "react";
 import { totalFromSubtotals, AddOnSalesTotal, AddOnSalesSubtotals } from "../totals";
 import { subtotalFromPlatforms, AddOnSalesPlatforms } from "../platforms";
 import "./salescard.css";
 
-export default class AddOnSalesCard extends Component {
-	render() {
-		const {addon} = this.props,
-					subtotals = subtotalFromPlatforms(addon.platforms),
+const AddOnSalesCard = ({addon}) => {
+		const subtotals = subtotalFromPlatforms(addon.platforms),
 					{amount, count} = totalFromSubtotals(subtotals);
 
 		return (
@@ -17,5 +15,6 @@ export default class AddOnSalesCard extends Component {
 				<AddOnSalesPlatforms platforms={addon.platforms}/>
 			</div>
 		);
-	}
 }
+
+export default AddOnSalesCard;

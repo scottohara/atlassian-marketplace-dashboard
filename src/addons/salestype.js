@@ -1,11 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class AddOnSalesType extends Component {
-	render() {
-		const {type} = this.props;
+const AddOnSalesType = ({type}) => (<div className="addon-sales-type">{type}</div>);
 
-		return (
-			<div className="addon-sales-type">{type}</div>
-		);
-	}
-}
+export default AddOnSalesType;

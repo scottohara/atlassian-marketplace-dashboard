@@ -1,11 +1,8 @@
-import React, { Component } from "react";
+import React from "react";
 import AddOnSalesCard from "./salescard";
 import "./salescards.css";
 
-export default class AddOnSalesCards extends Component {
-	render() {
-		const {vendors} = this.props;
-
+const AddOnSalesCards = ({vendors}) => {
 		const addons = vendors.length > 0 ? vendors[0].addons : [];
 
 		return (
@@ -13,5 +10,6 @@ export default class AddOnSalesCards extends Component {
 				{addons.map(addon => <AddOnSalesCard key={addon.name} addon={addon}/>)}
 			</div>
 		);
-	}
 }
+
+export default AddOnSalesCards;

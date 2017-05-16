@@ -50,14 +50,15 @@ export default class DateRange extends Component {
 	}
 
 	render() {
-		const {startDate, endDate} = this.state;
+		const {loading} = this.props,
+					{startDate, endDate} = this.state;
 
 		return (
 			<form className="date-range-form" onSubmit={this.refresh}>
 				<input type="date" value={startDate} onChange={this.handleStartDateChange}/>
 				<span className="range-arrow">&#x2192;</span>
 				<input type="date" value={endDate} onChange={this.handleEndDateChange}/>
-				<input className="refresh-button" type="submit" value="&#x21bb;" disabled={!this.isRangeSet}/>
+				<input className={`refresh-button ${loading ? "loading" : ""}`} type="submit" value="&#x21bb;" disabled={!this.isRangeSet}/>
 			</form>
 		);
 	}

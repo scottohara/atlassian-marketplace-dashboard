@@ -1,11 +1,9 @@
-import React, { Component } from "react";
+import React from "react";
 import { AddOnSalesAmount, AddOnSalesCount } from "../addons";
 import { totalFromSubtotals } from "../totals";
 import "./salestier.css";
 
-export default class AddOnSalesTier extends Component {
-	render() {
-		const {tier} = this.props;
+const AddOnSalesTier = ({tier}) => {
 		const {amount, count} = totalFromSubtotals(tier.subtotals);
 
 		return (
@@ -27,5 +25,6 @@ export default class AddOnSalesTier extends Component {
 				</td>
 			</tr>
 		);
-	}
 }
+
+export default AddOnSalesTier;

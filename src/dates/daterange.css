@@ -14,3 +14,16 @@
 .refresh-button[disabled] {
 	color: #888;
 }
+
+.refresh-button:focus {
+	outline: none;
+}
+
+.refresh-button.loading {
+	animation: spin 4s;
+}
+
+@keyframes spin {
+	from {transform:rotate(0deg);}
+	to {transform:rotate(360deg);}
+}

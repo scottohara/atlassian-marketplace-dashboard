@@ -1,17 +1,13 @@
-import React, { Component } from "react";
+import React from "react";
 import { AddOnSalesTiers } from "../tiers";
 import AddOnSalesPlatform from "./salesplatform";
 import "./salesplatforms.css";
 
-export default class AddOnSalesPlatforms extends Component {
-	render() {
-		const {platforms} = this.props;
+const AddOnSalesPlatforms = ({platforms}) => (
+	<div className="addon-sales-platforms">
+		{platforms.map(platform => <AddOnSalesPlatform key={platform.name} platform={platform}/>)}
+		{platforms.map(platform => <AddOnSalesTiers key={platform.name} platform={platform}/>)}
+	</div>
+);
 
-		return (
-			<div className="addon-sales-platforms">
-				{platforms.map(platform => <AddOnSalesPlatform key={platform.name} platform={platform}/>)}
-				{platforms.map(platform => <AddOnSalesTiers key={platform.name} platform={platform}/>)}
-			</div>
-		);
-	}
-}
+export default AddOnSalesPlatforms;

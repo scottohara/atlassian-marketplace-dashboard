@@ -1,11 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class AddOnSalesAmount extends Component {
-	render() {
-		const {amount} = this.props;
+const AddOnSalesAmount = ({amount}) => (<div className="addon-sales-amount">{+amount === 0 || isNaN(+amount) ? "-" : amount.toLocaleString("en-au", {style: "currency", currency: "AUD"})}</div>);
 
-		return (
-			<div className="addon-sales-amount">{+amount === 0 || isNaN(+amount) ? "-" : amount.toLocaleString("en-au", {style: "currency", currency: "AUD"})}</div>
-		);
-	}
-}
+export default AddOnSalesAmount;

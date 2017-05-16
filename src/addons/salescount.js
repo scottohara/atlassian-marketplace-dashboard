@@ -1,11 +1,5 @@
-import React, { Component } from "react";
+import React from "react";
 
-export default class AddOnSalesCount extends Component {
-	render() {
-		const {count} = this.props;
+const AddOnSalesCount = ({count}) => (<div className="addon-sales-count">{+count > 0 ? `(${count})` : ''}</div>);
 
-		return (
-			<div className="addon-sales-count">{+count > 0 ? `(${count})` : ''}</div>
-		);
-	}
-}
+export default AddOnSalesCount;
