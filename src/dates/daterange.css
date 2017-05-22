@@ -20,7 +20,7 @@
 }
 
 .refresh-button.loading {
-	animation: spin 4s;
+	animation: spin 4s linear infinite;
 }
 
 @keyframes spin {
