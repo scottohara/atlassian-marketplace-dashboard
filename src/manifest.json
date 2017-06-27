@@ -1,11 +1,13 @@
 {
   "name": "Atlassian Marketplace Sales",
   "short_name": "Atlassian Sales",
+  "description": "Detailed breakdown of all sales of your Atlassian Marketplace Add-ons",
+  "lang": "en-GB",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
   "theme_color": "#5a5d9f",
   "background_color": "#79589f",
-  "display": "standalone",
-  "Scope": "/",
-  "start_url": "/",
   "icons": [
     {
       "src": "images/icons/icon-72x72.png",
@@ -47,6 +49,5 @@
       "sizes": "512x512",
       "type": "image/png"
     }
-  ],
-  "splash_pages": null
+  ]
 }
