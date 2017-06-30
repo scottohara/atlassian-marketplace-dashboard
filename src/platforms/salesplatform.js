@@ -1,5 +1,7 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { AddOnSalesAmount, AddOnSalesCount, AddOnSalesType } from "../addons";
+import { AddOnSalesTier } from "../tiers";
 import { totalFromSubtotals, subtotalsObjectToArray, AddOnSalesSubtotals } from "../totals";
 import { subtotalFromTiers } from "../tiers";
 import "./salesplatform.css";
@@ -19,5 +21,12 @@ const AddOnSalesPlatform = ({platform}) => {
 			</div>
 		);
 }
+
+AddOnSalesPlatform.propTypes = {
+	platform: PropTypes.shape({
+		name: PropTypes.oneOf(["Cloud", "Server"]).isRequired,
+		tiers: PropTypes.arrayOf(AddOnSalesTier.propTypes.tier).isRequired
+	}).isRequired
+};
 
 export default AddOnSalesPlatform;

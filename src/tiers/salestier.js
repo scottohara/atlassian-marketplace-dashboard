@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { AddOnSalesAmount, AddOnSalesCount } from "../addons";
 import { totalFromSubtotals } from "../totals";
 import "./salestier.css";
@@ -26,5 +27,16 @@ const AddOnSalesTier = ({tier}) => {
 			</tr>
 		);
 }
+
+AddOnSalesTier.propTypes = {
+	tier: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		subtotals: PropTypes.arrayOf(PropTypes.shape({
+			type: PropTypes.oneOf(["New", "Renewal", "Upgrade", "Refund"]).isRequired,
+			amount: PropTypes.number,
+			count: PropTypes.number
+		})).isRequired
+	}).isRequired
+};
 
 export default AddOnSalesTier;

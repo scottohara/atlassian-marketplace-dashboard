@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { AddOnSalesType } from "../addons";
 import AddOnSalesTier from "./salestier";
 import "./salestiers.css";
@@ -23,5 +24,12 @@ const AddOnSalesTiers = ({platform}) => (
 		</table>
 	</div>
 );
+
+AddOnSalesTiers.propTypes = {
+	platform: PropTypes.shape({
+		name: PropTypes.oneOf(["Cloud", "Server"]).isRequired,
+		tiers: PropTypes.arrayOf(AddOnSalesTier.propTypes.tier).isRequired
+	}).isRequired
+};
 
 export default AddOnSalesTiers;

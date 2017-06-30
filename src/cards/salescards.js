@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import AddOnSalesCard from "./salescard";
 import "./salescards.css";
 
@@ -11,5 +12,13 @@ const AddOnSalesCards = ({vendors}) => {
 			</div>
 		);
 }
+
+AddOnSalesCards.propTypes = {
+	vendors: PropTypes.arrayOf(PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		logoUrl: PropTypes.string.isRequired,
+		addons: PropTypes.arrayOf(AddOnSalesCard.propTypes.addon).isRequired
+	}))
+};
 
 export default AddOnSalesCards;

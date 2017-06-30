@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import AddOnSalesSubtotal from "./salessubtotal";
 import "./salessubtotals.css";
 
@@ -13,5 +14,9 @@ const AddOnSalesSubtotals = ({subtotals}) => (
 		})}
 	</div>
 );
+
+AddOnSalesSubtotals.propTypes = {
+	subtotals: PropTypes.arrayOf(PropTypes.shape(AddOnSalesSubtotal.propTypes)).isRequired
+};
 
 export default AddOnSalesSubtotals;

@@ -1,4 +1,5 @@
 import React from "react";
+import PropTypes from "prop-types";
 import { totalFromSubtotals, AddOnSalesTotal, AddOnSalesSubtotals } from "../totals";
 import { subtotalFromPlatforms, AddOnSalesPlatforms } from "../platforms";
 import "./salescard.css";
@@ -16,5 +17,13 @@ const AddOnSalesCard = ({addon}) => {
 			</div>
 		);
 }
+
+AddOnSalesCard.propTypes = {
+	addon: PropTypes.shape({
+		name: PropTypes.string.isRequired,
+		logoUrl: PropTypes.string.isRequired,
+		platforms: AddOnSalesPlatforms.propTypes.platforms.isRequired
+	})
+};
 
 export default AddOnSalesCard;
