@@ -106,7 +106,7 @@ function fetchAddons(vendorId) {
  */
 function template() {
 	const PLATFORMS = [
-		{platform: "Cloud", tiers: ["10", "15", "25", "50", "100", "500", "2000"]},
+		{platform: "Cloud", tiers: ["10", "15", "25", "50", "100", "500", "2000", "Per Unit"]},
 		{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]}
 	];
 
@@ -188,7 +188,7 @@ function subtotal(transactions) {
 	return transactions.reduce((addons, transaction) => {
 		let {hosting, tier, saleType, vendorAmount} = transaction.purchaseDetails;
 
-		tier = tier.replace(" Users", "");
+		tier = tier.replace(/\s(Users|Pricing)/, "");
 
 		addons[hosting] = addons[hosting] || {};
 		addons[hosting][tier] = addons[hosting][tier] || {};
