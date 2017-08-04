@@ -105,10 +105,22 @@ function fetchAddons(vendorId) {
  * @return {Object} {platform: {tier: {saleType: {count, amount}}}} - the template
  */
 function template() {
-	const PLATFORMS = [
-		{platform: "Cloud", tiers: ["10", "15", "25", "50", "100", "500", "2000", "Per Unit"]},
-		{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]}
-	];
+	const {startDate, endDate} = DateRangeService,
+				PER_UNIT_PRICING_INTRODUCED = "2017-08-01",
+				LEGACY_CLOUD_TIERS = ["10", "15", "25", "50", "100", "500", "2000"],
+				PER_UNIT_CLOUD_TIERS = ["<=10", "1-100", "101-250", "251-2000"],
+				PLATFORMS = [
+					{platform: "Cloud", tiers: []},
+					{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]}
+				];
+
+	// Include legacy cloud tiers if necessary
+	if (startDate < PER_UNIT_PRICING_INTRODUCED) {
+		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...LEGACY_CLOUD_TIERS]
+	}
+	if (endDate >= PER_UNIT_PRICING_INTRODUCED) {
+		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...PER_UNIT_CLOUD_TIERS]
+	}
 
 	return platformsTemplate(PLATFORMS);
 }
@@ -188,7 +200,21 @@ function subtotal(transactions) {
 	return transactions.reduce((addons, transaction) => {
 		let {hosting, tier, saleType, vendorAmount} = transaction.purchaseDetails;
 
-		tier = tier.replace(/\s(Users|Pricing)/, "");
+		tier = tier.replace(/\sUsers/, "");
+
+		let units = tier.match(/Per Unit Pricing \((\d+) users\)/);
+		if (units && units.length >= 2 && !isNaN(Number(units[1]))) {
+			units = Number(units[1]);
+			if (units <= 10) {
+				tier = "<=10";
+			} else if (units <= 100) {
+				tier = "1-100";
+			} else if (units <= 250) {
+				tier = "101-250";
+			} else {
+				tier = "251-2000";
+			}
+		}
 
 		addons[hosting] = addons[hosting] || {};
 		addons[hosting][tier] = addons[hosting][tier] || {};
