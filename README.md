@@ -1,4 +1,10 @@
 atlassian-marketplace-dashboard
 ===============================
 
-Quick and dirty React app that pull data from the Atlassian Marketplace API for add-on sales, and displays the results in a dashboard.
+Responsive, mobile-friendly React app that pulls data from the Atlassian Marketplace API for add-on sales, and displays the results as a set of cards.
+
+### Desktop
+![Desktop](./screenshot.png "Desktop")
+
+### Phone
+![Phone](./phone.png "Phone")

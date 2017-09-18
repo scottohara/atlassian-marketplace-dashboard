@@ -61,6 +61,9 @@ function fetchVendors() {
 		});
 
 		return Promise.all(addonFetches).then(addonDetails => vendors.map((vendor, index) => {
+			// Sort the cards by name
+			addonDetails[index] = addonDetails[index].sort((a,b) => a.name.localeCompare(b.name));
+
 			// Generate a Total card for the vendor
 			addonDetails[index].unshift(totalFromAddons(vendor, addonDetails[index]));
 
@@ -217,7 +220,7 @@ function subtotal(transactions) {
 		}
 
 		addons[hosting] = addons[hosting] || {};
-		addons[hosting][tier] = addons[hosting][tier] || {};
+		addons[hosting][tier] = addons[hosting][tier] || subtotalsTemplate();
 		addons[hosting][tier][saleType] = addons[hosting][tier][saleType] || {count: 0, amount: 0};
 		addons[hosting][tier][saleType].count++;
 		addons[hosting][tier][saleType].amount += vendorAmount;
