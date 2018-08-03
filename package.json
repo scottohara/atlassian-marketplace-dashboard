@@ -14,7 +14,7 @@
     "prop-types": "^15.5.10",
     "react": "^15.5.4",
     "react-countup": "^2.0.3",
-    "react-dom": "^15.5.4"
+    "react-dom": "^16.0.1"
   },
   "scripts": {
     "start": "react-scripts start",
