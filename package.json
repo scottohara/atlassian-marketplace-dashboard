@@ -4,22 +4,28 @@
   "private": true,
   "homepage": "https://scottohara.github.io/atlassian-marketplace-dashboard/",
   "devDependencies": {
-    "enzyme": "^2.8.2",
-    "jest": "^20.0.4",
-    "jest-enzyme": "^3.0.1",
-    "react-addons-test-utils": "^15.5.1",
-    "react-scripts": "1.0.7"
+    "enzyme": "3.8.0",
+    "jest": "23.6.0",
+    "jest-enzyme": "7.0.1",
+    "react-addons-test-utils": "15.6.2",
+    "react-scripts": "2.1.2"
   },
   "dependencies": {
-    "prop-types": "^15.5.10",
-    "react": "^15.5.4",
-    "react-countup": "^2.0.3",
-    "react-dom": "^15.5.4"
+    "prop-types": "15.6.2",
+    "react": "16.7.0",
+    "react-countup": "4.0.0",
+    "react-dom": "16.7.0"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build && rm -rf ./docs/* && cp -R ./build/* ./docs/ && cp ./src/manifest.json ./docs/ && cp -R ./src/images ./docs/",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test",
     "eject": "react-scripts eject"
-  }
+  },
+  "browserslist": [
+    ">0.2%",
+    "not dead",
+    "not ie <= 11",
+    "not op_mini all"
+  ]
 }
