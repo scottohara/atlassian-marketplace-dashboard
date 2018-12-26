@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { AddOnSalesAmount, AddOnSalesCount, AddOnSalesType } from "../addons";
-import { AddOnSalesTier } from "../tiers";
+import { AddOnSalesTiers, AddOnSalesTier } from "../tiers";
 import { totalFromSubtotals, subtotalsObjectToArray, AddOnSalesSubtotals } from "../totals";
 import { subtotalFromTiers } from "../tiers";
 import "./salesplatform.css";
@@ -13,11 +13,12 @@ const AddOnSalesPlatform = ({platform}) => {
 		return (
 			<div className="addon-sales-platform">
 				<div className="addon-sales-platform-totals">
-					<AddOnSalesAmount amount={amount}/>
 					<AddOnSalesType type={platform.name}/>
+					<AddOnSalesAmount amount={amount}/>
 					<AddOnSalesCount count={count}/>
 				</div>
 				<AddOnSalesSubtotals subtotals={subtotals}/>
+				<AddOnSalesTiers platform={platform}/>
 			</div>
 		);
 }

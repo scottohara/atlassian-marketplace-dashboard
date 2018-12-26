@@ -1,34 +1,12 @@
 .addon-sales-platform {
-	width: 47%;
+	width: 100%;
 	text-align: center;
-	padding: 5px;
+	border-top: 1px solid;
 }
 
 .addon-sales-platform-totals {
-	min-height: 55px;
-}
-
-.addon-sales-platform-totals > .addon-sales-type {
+	display: flex;
+	justify-content: space-evenly;
+	padding: 5px;
 	font-size: 18px;
-}
-
-.addon-sales-platform > .addon-sales-subtotals {
-	flex-direction: column;
-	min-height: 52px;
-}
-
-.addon-sales-platform .addon-sales-subtotal {
-	flex-direction: row;
-	width: 100%;
-	justify-content: space-between;
-}
-
-.addon-sales-platform .addon-sales-subtotal .addon-sales-count {
-	margin-left: 5px;
-}
-
-.addon-sales-platform .addon-sales-subtotal .addon-sales-amount {
-	order: 3;
-	text-align: right;
-	flex-grow: 1;
 }
