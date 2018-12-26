@@ -114,7 +114,8 @@ function template() {
 				PER_UNIT_CLOUD_TIERS = ["<=10", "1-100", "101-250", "251-2000"],
 				PLATFORMS = [
 					{platform: "Cloud", tiers: []},
-					{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]}
+					{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]},
+					{platform: "Data Center", tiers: ["500", "1000", "2000", "3000", "4000", "5000", "10000", "15000", "20000", "25000", "30000", "35000", "40000", "Unlimited"]}
 				];
 
 	// Include legacy cloud tiers if necessary

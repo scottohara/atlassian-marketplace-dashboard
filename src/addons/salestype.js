@@ -6,7 +6,7 @@ const AddOnSalesType = ({type}) => (<div className="addon-sales-type">{type}</di
 AddOnSalesType.propTypes = {
 	type: PropTypes.oneOfType([
 		PropTypes.oneOf(["New", "Renewal", "Upgrade", "Refund"]),
-		PropTypes.oneOf(["Cloud", "Server"])
+		PropTypes.oneOf(["Cloud", "Server", "Data Center"])
 	])
 };
 

@@ -24,7 +24,7 @@ const AddOnSalesPlatform = ({platform}) => {
 
 AddOnSalesPlatform.propTypes = {
 	platform: PropTypes.shape({
-		name: PropTypes.oneOf(["Cloud", "Server"]).isRequired,
+		name: PropTypes.oneOf(["Cloud", "Server", "Data Center"]).isRequired,
 		tiers: PropTypes.arrayOf(AddOnSalesTier.propTypes.tier).isRequired
 	}).isRequired
 };
