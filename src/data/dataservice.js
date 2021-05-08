@@ -2,6 +2,8 @@ import { LoginService } from "../login";
 import { DateRangeService } from "../dates";
 import { totalFromAddons } from "../cards";
 
+let updateProgress;
+
 /**
  * Performs an API fetch
  * @param {String} path - API path to fetch
@@ -188,6 +190,7 @@ function fetchData(vendorId, addonKey, offset = 0, transactions = []) {
 		.then(json => {
 			// If the JSON includes transactions, append them to the previously fetched results
 			if (json.transactions) transactions = [...transactions, ...json.transactions];
+			updateProgress(transactions.length);
 
 			// If there are more transactions, fetch them; otherwise return the array of transactions
 			return json._links.next ? fetchData(vendorId, addonKey, offset + 50, transactions) : transactions;
@@ -254,7 +257,8 @@ export default class DataService {
 	 * Retrieves data from the Atlassian Marketplace API
 	 * @return {Array} - the sales data for all vendors/addons
 	 */
-	static refresh() {
+	static refresh(setProgress) {
+		updateProgress = setProgress;
 		return fetchVendors();
 	}
 }

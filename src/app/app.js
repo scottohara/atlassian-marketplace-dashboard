@@ -9,24 +9,29 @@ export default class App extends Component {
 	constructor(props) {
 		super(props);
 		this.refresh = this.refresh.bind(this);
-		this.state = {vendors: [], loading: false};
+		this.setProgress = this.setProgress.bind(this);
+		this.state = {vendors: [], loading: false, progress: 0};
 	}
 
 	componentDidMount() {
 		this.refresh();
 	}
 
+	setProgress(progress) {
+		this.setState({ progress });
+	}
+
 	refresh() {
-		this.setState({loading: true});
-		DataService.refresh().then(vendors => this.setState({vendors, loading: false}));
+		this.setState({loading: true, progress: 0});
+		DataService.refresh(this.setProgress).then(vendors => this.setState({vendors, loading: false}));
 	}
 
 	render() {
-		const {vendors, loading} = this.state;
+		const {vendors, loading, progress} = this.state;
 
 		return (
 			<div>
-				<AddOnCardsHeader refresh={this.refresh} loading={loading}/>
+				<AddOnCardsHeader refresh={this.refresh} loading={loading} progress={progress}/>
 				<AddOnSalesCards vendors={vendors}/>
 			</div>
 		);

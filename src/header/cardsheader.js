@@ -22,12 +22,13 @@ export default class AddOnCardsHeader extends Component {
 	}
 
 	render() {
-		const {refresh, loading} = this.props;
+		const {refresh, loading, progress} = this.props;
 
 		return (
 			<header>
 				<DateRange refresh={refresh} loading={loading}/>
 				<button className="settings-menu" onClick={this.handleSettingsClick}>&#9776;</button>
+				{ <span className="progress">#{progress}</span> }
 				<Login isOpen={this.state.login} close={this.toggleLogin}/>
 			</header>
 		);

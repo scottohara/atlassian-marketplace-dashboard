@@ -12,6 +12,10 @@ header form {
 	margin: 0 4px;
 }
 
+header span.progress {
+	float: right;
+}
+
 .settings-menu {
 	color: inherit;
 	font-size: inherit;
