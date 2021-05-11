@@ -10,19 +10,21 @@ export default class App extends Component {
 		super(props);
 		this.refresh = this.refresh.bind(this);
 		this.setProgress = this.setProgress.bind(this);
-		this.state = {vendors: [], loading: false, progress: 0};
+		this.state = { vendors: [], loading: false, progress: {} };
 	}
 
 	componentDidMount() {
 		this.refresh();
 	}
 
-	setProgress(progress) {
+	setProgress(addonKey, numTransactions) {
+		let { progress } = this.state;
+		progress[addonKey] = numTransactions;
 		this.setState({ progress });
 	}
 
 	refresh() {
-		this.setState({loading: true, progress: 0});
+		this.setState({ loading: true, progress: {} });
 		DataService.refresh(this.setProgress).then(vendors => this.setState({vendors, loading: false}));
 	}
 

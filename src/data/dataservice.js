@@ -190,7 +190,7 @@ function fetchData(vendorId, addonKey, offset = 0, transactions = []) {
 		.then(json => {
 			// If the JSON includes transactions, append them to the previously fetched results
 			if (json.transactions) transactions = [...transactions, ...json.transactions];
-			updateProgress(transactions.length);
+			updateProgress(addonKey, transactions.length);
 
 			// If there are more transactions, fetch them; otherwise return the array of transactions
 			return json._links.next ? fetchData(vendorId, addonKey, offset + 50, transactions) : transactions;

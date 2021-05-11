@@ -13,6 +13,7 @@ header form {
 }
 
 header span.progress {
+	padding: 1px;
 	float: right;
 }
 

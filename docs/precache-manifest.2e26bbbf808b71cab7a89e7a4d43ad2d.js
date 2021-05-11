@@ -1,11 +1,11 @@
 self.__precacheManifest = [
   {
-    "revision": "9dd31197023a99fca040",
-    "url": "/atlassian-marketplace-dashboard/static/css/main.697f50a5.chunk.css"
+    "revision": "00f02f51606a4db2d950",
+    "url": "/atlassian-marketplace-dashboard/static/css/main.0d2c8250.chunk.css"
   },
   {
-    "revision": "9dd31197023a99fca040",
-    "url": "/atlassian-marketplace-dashboard/static/js/main.9dd31197.chunk.js"
+    "revision": "00f02f51606a4db2d950",
+    "url": "/atlassian-marketplace-dashboard/static/js/main.00f02f51.chunk.js"
   },
   {
     "revision": "01986fb93687ff11de1a",
@@ -16,7 +16,7 @@ self.__precacheManifest = [
     "url": "/atlassian-marketplace-dashboard/static/js/runtime~main.d138013e.js"
   },
   {
-    "revision": "f833615050ebef1ec8bd670206af2df4",
+    "revision": "72861ea8a2fa00426844c920cbc8124b",
     "url": "/atlassian-marketplace-dashboard/index.html"
   }
 ];
