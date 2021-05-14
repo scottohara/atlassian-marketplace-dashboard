@@ -12,9 +12,21 @@ header form {
 	margin: 0 4px;
 }
 
-header span.progress {
-	padding: 1px;
+progress {
+	appearance: none;
+	margin: 7px;
+	height: 10px;
 	float: right;
+}
+
+progress::-webkit-progress-bar {
+	border-radius: 6px;
+	background-color: white;
+}
+
+progress::-webkit-progress-value {
+	border-radius: 4px;
+	background-color: #79589f;
 }
 
 .settings-menu {

@@ -10,17 +10,17 @@ export default class App extends Component {
 		super(props);
 		this.refresh = this.refresh.bind(this);
 		this.setProgress = this.setProgress.bind(this);
-		this.state = { vendors: [], loading: false, progress: {} };
+		this.state = { vendors: [], loading: false, totalTransactions: 0, progress: {} };
 	}
 
 	componentDidMount() {
 		this.refresh();
 	}
 
-	setProgress(addonKey, numTransactions) {
+	setProgress(totalTransactions, addonKey, numTransactions) {
 		let { progress } = this.state;
 		progress[addonKey] = numTransactions;
-		this.setState({ progress });
+		this.setState({ totalTransactions, progress });
 	}
 
 	refresh() {
@@ -29,11 +29,11 @@ export default class App extends Component {
 	}
 
 	render() {
-		const {vendors, loading, progress} = this.state;
+		const {vendors, loading, totalTransactions, progress} = this.state;
 
 		return (
 			<div>
-				<AddOnCardsHeader refresh={this.refresh} loading={loading} progress={progress}/>
+				<AddOnCardsHeader refresh={this.refresh} loading={loading} totalTransactions={totalTransactions} progress={progress}/>
 				<AddOnSalesCards vendors={vendors}/>
 			</div>
 		);

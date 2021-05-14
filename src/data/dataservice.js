@@ -3,6 +3,7 @@ import { DateRangeService } from "../dates";
 import { totalFromAddons } from "../cards";
 
 let updateProgress;
+let totalTransactions = 0;
 
 /**
  * Performs an API fetch
@@ -45,6 +46,7 @@ function fetchVendors() {
 	return apiFetch("vendors?forThisUser=true").then(vendorDetails => {
 		// Create an array to hold the addon fetch promises
 		const addonFetches = [];
+		const totalFetches = [];
 
 		// Build an array of vendors
 		const vendors = vendorDetails._embedded.vendors.map(vendor => {
@@ -59,8 +61,13 @@ function fetchVendors() {
 			// Get the addons for the vendor
 			addonFetches.push(fetchAddons(id));
 
+			// Get the total transactions for the vendor
+			totalFetches.push(fetchTotalTransactions(id));
+
 			return {name, logoUrl};
 		});
+
+		Promise.all(totalFetches).then(totals => totalTransactions = totals.reduce((total, count) => total + count, 0));
 
 		return Promise.all(addonFetches).then(addonDetails => vendors.map((vendor, index) => {
 			// Sort the cards by name
@@ -72,6 +79,21 @@ function fetchVendors() {
 			return Object.assign(vendor, {addons: addonDetails[index]})
 		}));
 	});
+}
+
+/**
+ * Returns the total transactions for a given vendor
+ * @param {String} vendorId - the vendor
+ * @return {Array<Object>} [totalTransactions] - the number of transactions for the vendor
+ */
+function fetchTotalTransactions(vendorId) {
+	const {startDate, endDate} = DateRangeService,
+				path = `vendors/${vendorId}/reporting/sales/transactions/hosting?aggretation=month&startDate=${startDate}&endDate=${endDate}`;
+
+	// Get the sales transactions
+	return apiFetch(path)
+		.then(json => json.total.series.reduce((total, platform) => total + platform.elements.reduce((platformTotal, element) => platformTotal + element.count, 0), 0))
+		.catch(console.log);
 }
 
 /**
@@ -190,7 +212,7 @@ function fetchData(vendorId, addonKey, offset = 0, transactions = []) {
 		.then(json => {
 			// If the JSON includes transactions, append them to the previously fetched results
 			if (json.transactions) transactions = [...transactions, ...json.transactions];
-			updateProgress(addonKey, transactions.length);
+			updateProgress(totalTransactions, addonKey, transactions.length);
 
 			// If there are more transactions, fetch them; otherwise return the array of transactions
 			return json._links.next ? fetchData(vendorId, addonKey, offset + 50, transactions) : transactions;

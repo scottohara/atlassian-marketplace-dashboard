@@ -22,15 +22,18 @@ export default class AddOnCardsHeader extends Component {
 	}
 
 	render() {
-		const {refresh, loading, progress} = this.props;
+		const {refresh, loading, totalTransactions, progress} = this.props;
 
 		const numTransactions = Object.values(progress).reduce((total, num) => total + num, 0);
+		const percentComplete = totalTransactions ? numTransactions / totalTransactions : 1;
+
+		console.log(totalTransactions, numTransactions, percentComplete);
 
 		return (
 			<header>
 				<DateRange refresh={refresh} loading={loading}/>
 				<button className="settings-menu" onClick={this.handleSettingsClick}>&#9776;</button>
-				{ <span className="progress">#{numTransactions}</span> }
+				{ percentComplete < 2 && <progress value={percentComplete}></progress> }
 				<Login isOpen={this.state.login} close={this.toggleLogin}/>
 			</header>
 		);
