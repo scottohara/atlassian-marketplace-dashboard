@@ -17,6 +17,7 @@ progress {
 	margin: 7px;
 	height: 10px;
 	float: right;
+	width: 80px;
 }
 
 progress::-webkit-progress-bar {
@@ -25,8 +26,8 @@ progress::-webkit-progress-bar {
 }
 
 progress::-webkit-progress-value {
-	border-radius: 4px;
-	background-color: #79589f;
+	border-radius: 6px;
+	background-color: lightgrey;
 }
 
 .settings-menu {

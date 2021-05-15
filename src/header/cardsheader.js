@@ -33,7 +33,7 @@ export default class AddOnCardsHeader extends Component {
 			<header>
 				<DateRange refresh={refresh} loading={loading}/>
 				<button className="settings-menu" onClick={this.handleSettingsClick}>&#9776;</button>
-				{ percentComplete < 2 && <progress value={percentComplete}></progress> }
+				{ percentComplete < 1 && <progress value={percentComplete}></progress> }
 				<Login isOpen={this.state.login} close={this.toggleLogin}/>
 			</header>
 		);
