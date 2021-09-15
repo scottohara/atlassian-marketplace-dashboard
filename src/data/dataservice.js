@@ -11,7 +11,7 @@ let totalTransactions = 0;
  * @return {Promise<Object>} - resolves to the JSON returned
  */
 function apiFetch(path) {
-	const apiHost = "atlassian-marketplace-proxy.herokuapp.com",  //marketplace.atlassian.com
+	const apiHost = "atlassian-marketplace-proxy.herokuapp.com",  //marketplace.atlassian.com, api.atlassian.com/marketplace/vendor
 				apiPath = "/rest/2/",
 				apiUrl = `https://${apiHost}${apiPath}`,
 
@@ -135,7 +135,7 @@ function template() {
 	const {startDate, endDate} = DateRangeService,
 				PER_UNIT_PRICING_INTRODUCED = "2017-08-01",
 				LEGACY_CLOUD_TIERS = ["10", "15", "25", "50", "100", "500", "2000"],
-				PER_UNIT_CLOUD_TIERS = ["<=10", "1-100", "101-250", "251-2000"],
+				PER_UNIT_CLOUD_TIERS = ["<=10", "1-100", "101-250", "251-1000", "1001-2500", "2501-5000", "5001-7500", "7501-10000", "10001-15000", "15001-20000", "20001+"],
 				PLATFORMS = [
 					{platform: "Cloud", tiers: []},
 					{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]},
@@ -231,7 +231,7 @@ function subtotal(transactions) {
 
 		tier = tier.replace(/\sUsers/, "");
 
-		let units = tier.match(/Per Unit Pricing \((\d+) users\)/);
+		let units = tier.match(/Per Unit Pricing \((\d+)\)/);
 		if (units && units.length >= 2 && !isNaN(Number(units[1]))) {
 			units = Number(units[1]);
 			if (units <= 10) {
@@ -240,8 +240,22 @@ function subtotal(transactions) {
 				tier = "1-100";
 			} else if (units <= 250) {
 				tier = "101-250";
+			} else if (units <= 1000) {
+				tier = "251-1000";
+			} else if (units <= 2500) {
+				tier = "1001-2500";
+			} else if (units <= 5000) {
+				tier = "2501-5000";
+			} else if (units <= 7500) {
+				tier = "5001-7500";
+			} else if (units <= 10000) {
+				tier = "7501-10000";
+			} else if (units <= 15000) {
+				tier = "10001-15000";
+			} else if (units <= 20000) {
+				tier = "15001-20000";
 			} else {
-				tier = "251-2000";
+				tier = "20001+";
 			}
 		}
 

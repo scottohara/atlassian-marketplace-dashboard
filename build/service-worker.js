@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/3.6.3/workbox-sw.js");
 
 importScripts(
-  "/atlassian-marketplace-dashboard/precache-manifest.57df2ca130f75b29b05f80aad91ea8ac.js"
+  "/atlassian-marketplace-dashboard/precache-manifest.a56829bf5cef599cf77c21d575e459b8.js"
 );
 
 workbox.clientsClaim();
