@@ -4,14 +4,14 @@
   "private": true,
   "homepage": "https://scottohara.github.io/atlassian-marketplace-dashboard/",
   "devDependencies": {
-    "enzyme": "3.8.0",
-    "jest": "23.6.0",
-    "jest-enzyme": "7.0.1",
+		"enzyme": "3.11.0",
+		"jest": "29.0.1",
+		"jest-enzyme": "7.1.2",
     "react-addons-test-utils": "15.6.2",
-    "react-scripts": "2.1.2"
+		"react-scripts": "5.0.1"
   },
   "dependencies": {
-    "prop-types": "15.6.2",
+		"prop-types": "15.8.1",
     "react": "16.7.0",
     "react-countup": "4.0.0",
     "react-dom": "16.7.0"

@@ -1,13 +1,13 @@
 {
-  "main.css": "/atlassian-marketplace-dashboard/static/css/main.198b8534.chunk.css",
-  "main.js": "/atlassian-marketplace-dashboard/static/js/main.651e9238.chunk.js",
-  "main.js.map": "/atlassian-marketplace-dashboard/static/js/main.651e9238.chunk.js.map",
-  "static/js/1.01986fb9.chunk.js": "/atlassian-marketplace-dashboard/static/js/1.01986fb9.chunk.js",
-  "static/js/1.01986fb9.chunk.js.map": "/atlassian-marketplace-dashboard/static/js/1.01986fb9.chunk.js.map",
-  "runtime~main.js": "/atlassian-marketplace-dashboard/static/js/runtime~main.d138013e.js",
-  "runtime~main.js.map": "/atlassian-marketplace-dashboard/static/js/runtime~main.d138013e.js.map",
-  "static/css/main.198b8534.chunk.css.map": "/atlassian-marketplace-dashboard/static/css/main.198b8534.chunk.css.map",
-  "index.html": "/atlassian-marketplace-dashboard/index.html",
-  "precache-manifest.a56829bf5cef599cf77c21d575e459b8.js": "/atlassian-marketplace-dashboard/precache-manifest.a56829bf5cef599cf77c21d575e459b8.js",
-  "service-worker.js": "/atlassian-marketplace-dashboard/service-worker.js"
+  "files": {
+    "main.css": "/atlassian-marketplace-dashboard/static/css/main.011909c4.css",
+    "main.js": "/atlassian-marketplace-dashboard/static/js/main.42429c17.js",
+    "index.html": "/atlassian-marketplace-dashboard/index.html",
+    "main.011909c4.css.map": "/atlassian-marketplace-dashboard/static/css/main.011909c4.css.map",
+    "main.42429c17.js.map": "/atlassian-marketplace-dashboard/static/js/main.42429c17.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.011909c4.css",
+    "static/js/main.42429c17.js"
+  ]
 }

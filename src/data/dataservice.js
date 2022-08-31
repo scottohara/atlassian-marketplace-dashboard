@@ -11,7 +11,7 @@ let totalTransactions = 0;
  * @return {Promise<Object>} - resolves to the JSON returned
  */
 function apiFetch(path) {
-	const apiHost = "atlassian-marketplace-proxy.herokuapp.com",  //marketplace.atlassian.com, api.atlassian.com/marketplace/vendor
+	const apiHost = "atlassian-marketplace-proxy.oharagroup.workers.dev",  //marketplace.atlassian.com, api.atlassian.com/marketplace/vendor
 				apiPath = "/rest/2/",
 				apiUrl = `https://${apiHost}${apiPath}`,
 
