@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/atlassian-marketplace-dashboard/static/css/main.011909c4.css",
-    "main.js": "/atlassian-marketplace-dashboard/static/js/main.42429c17.js",
+    "main.css": "/atlassian-marketplace-dashboard/static/css/main.f0550d8f.css",
+    "main.js": "/atlassian-marketplace-dashboard/static/js/main.91a8c7aa.js",
     "index.html": "/atlassian-marketplace-dashboard/index.html",
-    "main.011909c4.css.map": "/atlassian-marketplace-dashboard/static/css/main.011909c4.css.map",
-    "main.42429c17.js.map": "/atlassian-marketplace-dashboard/static/js/main.42429c17.js.map"
+    "main.f0550d8f.css.map": "/atlassian-marketplace-dashboard/static/css/main.f0550d8f.css.map",
+    "main.91a8c7aa.js.map": "/atlassian-marketplace-dashboard/static/js/main.91a8c7aa.js.map"
   },
   "entrypoints": [
-    "static/css/main.011909c4.css",
-    "static/js/main.42429c17.js"
+    "static/css/main.f0550d8f.css",
+    "static/js/main.91a8c7aa.js"
   ]
 }

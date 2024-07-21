@@ -7,6 +7,10 @@ export default class LoginService {
 		return "atlassian-password";
 	}
 
+	static get VENDOR_ID() {
+		return "atlassian-vendor-id";
+	}
+
 	static get userName() {
 		return window.localStorage.getItem(this.USER_NAME);
 	}
@@ -23,7 +27,15 @@ export default class LoginService {
 		window.localStorage.setItem(this.PASSWORD, value);
 	}
 
+	static get vendorId() {
+		return window.localStorage.getItem(this.VENDOR_ID);
+	}
+
+	static set vendorId(value) {
+		window.localStorage.setItem(this.VENDOR_ID, value);
+	}
+
 	static get isLoggedIn() {
-		return (this.userName && this.password) ? true : false;
+		return this.userName && this.password ? true : false;
 	}
 }

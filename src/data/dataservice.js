@@ -11,21 +11,18 @@ let totalTransactions = 0;
  * @return {Promise<Object>} - resolves to the JSON returned
  */
 function apiFetch(path) {
-	const apiHost = "atlassian-marketplace-proxy.oharagroup.workers.dev",  //marketplace.atlassian.com, api.atlassian.com/marketplace/vendor
-				apiPath = "/rest/2/",
-				apiUrl = `https://${apiHost}${apiPath}`,
-
-				// Extract username and password from login service
-				{ userName, password } = LoginService,
-
-				// Base64 encode credentials
-				credentials = btoa(`${userName}:${password}`),
-
-				// Construct the Authorization header
-				headers = {headers: {Authorization: `Basic ${credentials}`}};
+	const apiHost = "atlassian-marketplace-proxy.oharagroup.workers.dev", //marketplace.atlassian.com, api.atlassian.com/marketplace/vendor
+		apiPath = "/rest/2/",
+		apiUrl = `https://${apiHost}${apiPath}`,
+		// Extract username and password from login service
+		{ userName, password } = LoginService,
+		// Base64 encode credentials
+		credentials = btoa(`${userName}:${password}`),
+		// Construct the Authorization header
+		headers = { headers: { Authorization: `Basic ${credentials}` } };
 
 	// Execute the fetch and return a promise that resolves to the JSON
-	return fetch(`${apiUrl}${path}`, headers).then(response => response.json());
+	return fetch(`${apiUrl}${path}`, headers).then((response) => response.json());
 }
 
 /**
@@ -38,25 +35,22 @@ function getLogoUrl(entity) {
 }
 
 /**
- * Returns the vendors associated with the provided credentials
+ * Returns the vendor details
  * @return {Array<Object>} [{name, logoUrl, addons}] - the vendor details
  */
-function fetchVendors() {
-	// Get the vendors
-	return apiFetch("vendors?forThisUser=true").then(vendorDetails => {
+function fetchVendor(vendorId) {
+	// Get the vendor
+	return apiFetch(`vendors/${vendorId}`).then((vendorDetails) => {
 		// Create an array to hold the addon fetch promises
 		const addonFetches = [];
 		const totalFetches = [];
 
-		// Build an array of vendors
-		const vendors = vendorDetails._embedded.vendors.map(vendor => {
-			const	id = vendor._links.self.href.match(/^\/rest\/2\/vendors\/(\d+)$/i)[1],
-
-						// Extract the vendor name
-						name = vendor.name,
-
-						// Extract the vendor logo
-						logoUrl = getLogoUrl(vendor);
+		const vendors = [vendorDetails].map((vendor) => {
+			const id = vendor.id,
+				// Extract the vendor name
+				name = vendor.name,
+				// Extract the vendor logo
+				logoUrl = getLogoUrl(vendor);
 
 			// Get the addons for the vendor
 			addonFetches.push(fetchAddons(id));
@@ -64,20 +58,29 @@ function fetchVendors() {
 			// Get the total transactions for the vendor
 			totalFetches.push(fetchTotalTransactions(id));
 
-			return {name, logoUrl};
+			return { name, logoUrl };
 		});
 
-		Promise.all(totalFetches).then(totals => totalTransactions = totals.reduce((total, count) => total + count, 0));
+		Promise.all(totalFetches).then(
+			(totals) =>
+				(totalTransactions = totals.reduce((total, count) => total + count, 0))
+		);
 
-		return Promise.all(addonFetches).then(addonDetails => vendors.map((vendor, index) => {
-			// Sort the cards by name
-			addonDetails[index] = addonDetails[index].sort((a,b) => a.name.localeCompare(b.name));
+		return Promise.all(addonFetches).then((addonDetails) =>
+			vendors.map((vendor, index) => {
+				// Sort the cards by name
+				addonDetails[index] = addonDetails[index].sort((a, b) =>
+					a.name.localeCompare(b.name)
+				);
 
-			// Generate a Total card for the vendor
-			addonDetails[index].unshift(totalFromAddons(vendor, addonDetails[index]));
+				// Generate a Total card for the vendor
+				addonDetails[index].unshift(
+					totalFromAddons(vendor, addonDetails[index])
+				);
 
-			return Object.assign(vendor, {addons: addonDetails[index]})
-		}));
+				return Object.assign(vendor, { addons: addonDetails[index] });
+			})
+		);
 	});
 }
 
@@ -87,12 +90,22 @@ function fetchVendors() {
  * @return {Array<Object>} [totalTransactions] - the number of transactions for the vendor
  */
 function fetchTotalTransactions(vendorId) {
-	const {startDate, endDate} = DateRangeService,
-				path = `vendors/${vendorId}/reporting/sales/transactions/hosting?aggretation=month&startDate=${startDate}&endDate=${endDate}`;
+	const { startDate, endDate } = DateRangeService,
+		path = `vendors/${vendorId}/reporting/sales/transactions/hosting?aggretation=month&startDate=${startDate}&endDate=${endDate}`;
 
 	// Get the sales transactions
 	return apiFetch(path)
-		.then(json => json.total.series.reduce((total, platform) => total + platform.elements.reduce((platformTotal, element) => platformTotal + element.count, 0), 0))
+		.then((json) =>
+			json.total.series.reduce(
+				(total, platform) =>
+					total +
+					platform.elements.reduce(
+						(platformTotal, element) => platformTotal + element.count,
+						0
+					),
+				0
+			)
+		)
 		.catch(console.log);
 }
 
@@ -103,27 +116,29 @@ function fetchTotalTransactions(vendorId) {
  */
 function fetchAddons(vendorId) {
 	// Get the addons
-	return apiFetch(`addons/vendor/${vendorId}`).then(addonDetails => {
+	return apiFetch(`addons/vendor/${vendorId}`).then((addonDetails) => {
 		// Create an array to hold the transaction fetch promises
 		const transactionFetches = [];
 
 		// Build an array of addons
-		const addons = addonDetails._embedded.addons.map(addon => {
-			const {key, name} = addon,
-
-						// Extract the addon logo
-						logoUrl = getLogoUrl(addon);
+		const addons = addonDetails._embedded.addons.map((addon) => {
+			const { key, name } = addon,
+				// Extract the addon logo
+				logoUrl = getLogoUrl(addon);
 
 			// Get the sales data for the addon
-			transactionFetches.push(fetchData(vendorId, key)
-				.then(subtotal)
-				.then(transform)
+			transactionFetches.push(
+				fetchData(vendorId, key).then(subtotal).then(transform)
 			);
 
-			return {name, logoUrl};
+			return { name, logoUrl };
 		});
 
-		return Promise.all(transactionFetches).then(transactionDetails => addons.map((addon, index) => Object.assign(addon, {platforms: transactionDetails[index]})));
+		return Promise.all(transactionFetches).then((transactionDetails) =>
+			addons.map((addon, index) =>
+				Object.assign(addon, { platforms: transactionDetails[index] })
+			)
+		);
 	});
 }
 
@@ -132,22 +147,71 @@ function fetchAddons(vendorId) {
  * @return {Object} {platform: {tier: {saleType: {count, amount}}}} - the template
  */
 function template() {
-	const {startDate, endDate} = DateRangeService,
-				PER_UNIT_PRICING_INTRODUCED = "2017-08-01",
-				LEGACY_CLOUD_TIERS = ["10", "15", "25", "50", "100", "500", "2000"],
-				PER_UNIT_CLOUD_TIERS = ["<=10", "1-100", "101-250", "251-1000", "1001-2500", "2501-5000", "5001-7500", "7501-10000", "10001-15000", "15001-20000", "20001+"],
-				PLATFORMS = [
-					{platform: "Cloud", tiers: []},
-					{platform: "Server", tiers: ["10", "25", "50", "100", "250", "500", "2000", "10000", "Unlimited"]},
-					{platform: "Data Center", tiers: ["500", "1000", "2000", "3000", "4000", "5000", "10000", "15000", "20000", "25000", "30000", "35000", "40000", "Unlimited"]}
-				];
+	const { startDate, endDate } = DateRangeService,
+		PER_UNIT_PRICING_INTRODUCED = "2017-08-01",
+		LEGACY_CLOUD_TIERS = ["10", "15", "25", "50", "100", "500", "2000"],
+		PER_UNIT_CLOUD_TIERS = [
+			"<=10",
+			"1-100",
+			"101-250",
+			"251-1000",
+			"1001-2500",
+			"2501-5000",
+			"5001-7500",
+			"7501-10000",
+			"10001-15000",
+			"15001-20000",
+			"20001-25000",
+			"25001-30000",
+			"30001-35000",
+			"35001-40000",
+			"40001-45000",
+			"45001-50000",
+			"50001+",
+		],
+		PLATFORMS = [
+			{ platform: "Cloud", tiers: [] },
+			{
+				platform: "Data Center",
+				tiers: [
+					"500",
+					"1000",
+					"2000",
+					"3000",
+					"4000",
+					"5000",
+					"10000",
+					"15000",
+					"20000",
+					"25000",
+					"30000",
+					"35000",
+					"40000",
+					"Unlimited",
+				],
+			},
+			{
+				platform: "Server",
+				tiers: [
+					"10",
+					"25",
+					"50",
+					"100",
+					"250",
+					"500",
+					"2000",
+					"10000",
+					"Unlimited",
+				],
+			},
+		];
 
 	// Include legacy cloud tiers if necessary
 	if (startDate < PER_UNIT_PRICING_INTRODUCED) {
-		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...LEGACY_CLOUD_TIERS]
+		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...LEGACY_CLOUD_TIERS];
 	}
 	if (endDate >= PER_UNIT_PRICING_INTRODUCED) {
-		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...PER_UNIT_CLOUD_TIERS]
+		PLATFORMS[0].tiers = [...PLATFORMS[0].tiers, ...PER_UNIT_CLOUD_TIERS];
 	}
 
 	return platformsTemplate(PLATFORMS);
@@ -159,7 +223,11 @@ function template() {
  * @return {Object} {platform: {tier: {saleType: {count, amount}}}} - the template
  */
 function platformsTemplate(platforms) {
-	return platforms.reduce((template, {platform, tiers}) => Object.assign(template, {[platform]: tiersTemplate(tiers)}), {});
+	return platforms.reduce(
+		(template, { platform, tiers }) =>
+			Object.assign(template, { [platform]: tiersTemplate(tiers) }),
+		{}
+	);
 }
 
 /**
@@ -168,7 +236,11 @@ function platformsTemplate(platforms) {
  * @return {Object} {tier: {saleType: {count, amount}}} - the template
  */
 function tiersTemplate(tiers) {
-	return tiers.reduce((template, tier) => Object.assign(template, {[tier]: subtotalsTemplate()}), {});
+	return tiers.reduce(
+		(template, tier) =>
+			Object.assign(template, { [tier]: subtotalsTemplate() }),
+		{}
+	);
 }
 
 /**
@@ -178,7 +250,11 @@ function tiersTemplate(tiers) {
 function subtotalsTemplate() {
 	const SALES_TYPES = ["New", "Renewal", "Upgrade", "Refund"];
 
-	return SALES_TYPES.reduce((template, type) => Object.assign(template, {[type]: salesTypeTemplate()}), {});
+	return SALES_TYPES.reduce(
+		(template, type) =>
+			Object.assign(template, { [type]: salesTypeTemplate() }),
+		{}
+	);
 }
 
 /**
@@ -186,7 +262,7 @@ function subtotalsTemplate() {
  * @return {Object} {count, amount} - the template
  */
 function salesTypeTemplate() {
-	return {count: 0, amount: 0};
+	return { count: 0, amount: 0 };
 }
 
 /**
@@ -204,18 +280,21 @@ function salesTypeTemplate() {
  * @return {Promise<Array>} - the transaction details
  */
 function fetchData(vendorId, addonKey, offset = 0, transactions = []) {
-	const {startDate, endDate} = DateRangeService,
-				path = `vendors/${vendorId}/reporting/sales/transactions?addon=${addonKey}&limit=50&offset=${offset}&startDate=${startDate}&endDate=${endDate}`;
+	const { startDate, endDate } = DateRangeService,
+		path = `vendors/${vendorId}/reporting/sales/transactions?addon=${addonKey}&limit=50&offset=${offset}&startDate=${startDate}&endDate=${endDate}`;
 
 	// Get the sales transactions
 	return apiFetch(path)
-		.then(json => {
+		.then((json) => {
 			// If the JSON includes transactions, append them to the previously fetched results
-			if (json.transactions) transactions = [...transactions, ...json.transactions];
+			if (json.transactions)
+				transactions = [...transactions, ...json.transactions];
 			updateProgress(totalTransactions, addonKey, transactions.length);
 
 			// If there are more transactions, fetch them; otherwise return the array of transactions
-			return json._links.next ? fetchData(vendorId, addonKey, offset + 50, transactions) : transactions;
+			return json._links.next
+				? fetchData(vendorId, addonKey, offset + 50, transactions)
+				: transactions;
 		})
 		.catch(console.log);
 }
@@ -227,7 +306,7 @@ function fetchData(vendorId, addonKey, offset = 0, transactions = []) {
  */
 function subtotal(transactions) {
 	return transactions.reduce((addons, transaction) => {
-		let {hosting, tier, saleType, vendorAmount} = transaction.purchaseDetails;
+		let { hosting, tier, saleType, vendorAmount } = transaction.purchaseDetails;
 
 		tier = tier.replace(/\sUsers/, "");
 
@@ -254,14 +333,29 @@ function subtotal(transactions) {
 				tier = "10001-15000";
 			} else if (units <= 20000) {
 				tier = "15001-20000";
+			} else if (units <= 25000) {
+				tier = "20001-25000";
+			} else if (units <= 30000) {
+				tier = "25001-30000";
+			} else if (units <= 35000) {
+				tier = "30001-35000";
+			} else if (units <= 40000) {
+				tier = "35001-40000";
+			} else if (units <= 45000) {
+				tier = "40001-45000";
+			} else if (units <= 50000) {
+				tier = "45001-50000";
 			} else {
-				tier = "20001+";
+				tier = "50001+";
 			}
 		}
 
 		addons[hosting] = addons[hosting] || {};
 		addons[hosting][tier] = addons[hosting][tier] || subtotalsTemplate();
-		addons[hosting][tier][saleType] = addons[hosting][tier][saleType] || {count: 0, amount: 0};
+		addons[hosting][tier][saleType] = addons[hosting][tier][saleType] || {
+			count: 0,
+			amount: 0,
+		};
 		addons[hosting][tier][saleType].count++;
 		addons[hosting][tier][saleType].amount += vendorAmount;
 
@@ -275,16 +369,16 @@ function subtotal(transactions) {
  * @return {Array} [{name, tiers: [{name, subtotals: [{type, amount, count}]}]
  */
 function transform(data) {
-	return Object.keys(data).map(platform => ({
+	return Object.keys(data).map((platform) => ({
 		name: platform,
-		tiers: Object.keys(data[platform]).map(tier => ({
+		tiers: Object.keys(data[platform]).map((tier) => ({
 			name: tier,
-			subtotals: Object.keys(data[platform][tier]).map(type => ({
+			subtotals: Object.keys(data[platform][tier]).map((type) => ({
 				type,
 				amount: data[platform][tier][type].amount,
-				count: data[platform][tier][type].count
-			}))
-		}))
+				count: data[platform][tier][type].count,
+			})),
+		})),
 	}));
 }
 
@@ -295,6 +389,6 @@ export default class DataService {
 	 */
 	static refresh(setProgress) {
 		updateProgress = setProgress;
-		return fetchVendors();
+		return fetchVendor(LoginService.vendorId);
 	}
 }
