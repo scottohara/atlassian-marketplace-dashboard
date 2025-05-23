@@ -248,7 +248,7 @@ function tiersTemplate(tiers) {
  * @return {Object} {saleType: {count, amount}} - the template
  */
 function subtotalsTemplate() {
-	const SALES_TYPES = ["New", "Renewal", "Upgrade", "Refund"];
+	const SALES_TYPES = ["New", "Renewal", "Upgrade", "Downgrade", "Refund"];
 
 	return SALES_TYPES.reduce(
 		(template, type) =>
