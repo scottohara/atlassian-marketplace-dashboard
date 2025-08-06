@@ -39,48 +39,23 @@ function getLogoUrl(entity) {
  * @return {Array<Object>} [{name, logoUrl, addons}] - the vendor details
  */
 function fetchVendor(vendorId) {
-	// Get the vendor
-	return apiFetch(`vendors/${vendorId}`).then((vendorDetails) => {
-		// Create an array to hold the addon fetch promises
-		const addonFetches = [];
-		const totalFetches = [];
+	const vendor = {
+		name: "All Apps",
+		logoUrl: "",
+	};
 
-		const vendors = [vendorDetails].map((vendor) => {
-			const id = vendor.id,
-				// Extract the vendor name
-				name = vendor.name,
-				// Extract the vendor logo
-				logoUrl = getLogoUrl(vendor);
+	fetchTotalTransactions(vendorId).then(
+		(totals) => (totalTransactions = totals)
+	);
 
-			// Get the addons for the vendor
-			addonFetches.push(fetchAddons(id));
+	return fetchAddons(vendorId).then((addonDetails) => {
+		// Sort the cards by name
+		addonDetails.sort((a, b) => a.name.localeCompare(b.name));
 
-			// Get the total transactions for the vendor
-			totalFetches.push(fetchTotalTransactions(id));
+		// Generate a Total card for the vendor
+		addonDetails.unshift(totalFromAddons(vendor, addonDetails));
 
-			return { name, logoUrl };
-		});
-
-		Promise.all(totalFetches).then(
-			(totals) =>
-				(totalTransactions = totals.reduce((total, count) => total + count, 0))
-		);
-
-		return Promise.all(addonFetches).then((addonDetails) =>
-			vendors.map((vendor, index) => {
-				// Sort the cards by name
-				addonDetails[index] = addonDetails[index].sort((a, b) =>
-					a.name.localeCompare(b.name)
-				);
-
-				// Generate a Total card for the vendor
-				addonDetails[index].unshift(
-					totalFromAddons(vendor, addonDetails[index])
-				);
-
-				return Object.assign(vendor, { addons: addonDetails[index] });
-			})
-		);
+		return [Object.assign(vendor, { addons: addonDetails })];
 	});
 }
 
