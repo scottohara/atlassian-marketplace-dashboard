@@ -1,0 +1,9 @@
+{
+	"name": "Atlassian Marketplace Sales",
+	"short_name": "Atlassian Sales",
+	"description": "Detailed breakdown of all sales of your Atlassian Marketplace Add-ons",
+	"lang": "en-GB",
+	"start_url": "/",
+	"scope": "/",
+	"display": "standalone"
+}
