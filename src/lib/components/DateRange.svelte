@@ -53,6 +53,11 @@
 				border: 1px solid var(--secondary-border-color);
 				border-radius: 0.5rem;
 				padding: 0.5rem;
+				width: 98px;
+			}
+
+			input[type="date"]::-webkit-calendar-picker-indicator {
+				display: none;
 			}
 		}
 

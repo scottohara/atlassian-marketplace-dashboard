@@ -77,16 +77,4 @@
 			}
 		}
 	}
-
-	@media (max-width: 478px) {
-		header {
-			.settings {
-				order: 1;
-			}
-
-			.period {
-				order: 2;
-			}
-		}
-	}
 </style>
