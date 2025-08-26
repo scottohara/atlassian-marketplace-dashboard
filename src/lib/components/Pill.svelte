@@ -37,7 +37,7 @@
 		border: 1px solid;
 		padding: 0.5rem;
 		font-size: 0.75rem;
-		box-shadow: 0 0 0.25rem color-mix(in srgb, var(--primary-border-color) 70%, transparent);
+		box-shadow: 0 0 0.25rem color-mix(in oklch, var(--border-primary) 70%, transparent);
 		background-color: var(--pill-bg-color);
 		border-color: var(--pill-ink-color);
 		color: var(--pill-ink-color);

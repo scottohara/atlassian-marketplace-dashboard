@@ -11,16 +11,20 @@
 
 <style>
 	.loading {
+		--surface-loading: oklab(0% 0 0 / 0.08);
+
 		width: 100%;
 		height: 5px;
-		background: var(--loading-bg-color);
+		background: var(--surface-loading);
 		overflow: hidden;
 		border-radius: 999px;
 
 		.bar {
+			--loading-bar: color-mix(in oklch, var(--green) 45%, transparent);
+
 			height: 5px;
 			width: 40%;
-			background: linear-gradient(90deg, transparent, var(--loading-bar-color), transparent);
+			background: linear-gradient(90deg, transparent, var(--loading-bar), transparent);
 			transform: translateX(-100%);
 			animation: pingpong 1.4s infinite ease-in-out alternate;
 		}

@@ -21,6 +21,6 @@
 		font-size: 2rem;
 		font-weight: 500;
 		margin: 0;
-		color: var(--error-text-color);
+		color: var(--text-error);
 	}
 </style>

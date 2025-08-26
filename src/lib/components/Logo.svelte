@@ -9,10 +9,12 @@
 
 <style>
 	img {
-		background-color: var(--logo-bg-color);
+		--logo-size: 56px;
+
+		background-color: var(--white);
 		width: var(--logo-size);
 		height: var(--logo-size);
-		border: 1px solid var(--secondary-border-color);
+		border: 1px solid var(--border-secondary);
 		padding: 1rem;
 		border-radius: var(--border-radius);
 	}

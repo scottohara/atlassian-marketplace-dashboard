@@ -23,10 +23,10 @@
 		gap: 1rem;
 		list-style: none;
 		padding: 1rem;
-		color: var(--primary-text-color);
-		background: var(--card-bg-color);
-		border: 1px solid var(--primary-border-color);
-		box-shadow: 0 0 0.5rem color-mix(in srgb, var(--primary-border-color) 70%, transparent);
+		color: var(--text-primary);
+		background: var(--surface-container);
+		border: 1px solid var(--border-primary);
+		box-shadow: 0 0 0.5rem color-mix(in oklch, var(--border-primary) 70%, transparent);
 		border-radius: var(--border-radius);
 
 		header {

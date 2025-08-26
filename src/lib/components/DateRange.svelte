@@ -50,24 +50,28 @@
 			font-weight: 500;
 
 			input {
-				border: 1px solid var(--secondary-border-color);
+				border: 1px solid var(--border-secondary);
 				border-radius: 0.5rem;
 				padding: 0.5rem;
 				width: 98px;
+				min-height: 17px;
+				color: var(--text-primary);
 			}
 
 			input[type="date"]::-webkit-calendar-picker-indicator {
 				display: none;
+				-webkit-appearance: none;
 			}
 		}
 
 		button {
-			border: 1px solid var(--secondary-border-color);
+			border: 1px solid var(--border-secondary);
 			border-radius: 0.5rem;
 			padding: 0.34rem;
 			min-width: 5rem;
 			font-size: 1.25rem;
 			margin-left: auto;
+			color: var(--text-primary);
 		}
 	}
 

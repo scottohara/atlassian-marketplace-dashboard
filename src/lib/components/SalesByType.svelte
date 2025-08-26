@@ -37,7 +37,7 @@ Sales By Type
 		flex-wrap: wrap;
 		gap: 1rem;
 		padding-bottom: 1rem;
-		border-bottom: 1px solid var(--primary-border-color);
+		border-bottom: 1px solid var(--border-primary);
 
 		span {
 			margin-right: auto;

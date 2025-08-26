@@ -16,59 +16,52 @@
 	:global {
 		@media (prefers-color-scheme: light) {
 			:root {
-				--bg-color: rgb(242, 242, 242);
+				--surface: oklch(96.115% 0.00011 271.152);
+				--surface-container: var(--white);
 
-				--primary-text-color: rgb(0, 0, 0);
-				--secondary-text-color: rgb(128, 128, 128);
-				--error-text-color: rgb(255, 0, 0);
+				--text-primary: var(--black);
+				--text-secondary: oklch(59.987% 0.00007 271.152);
 
-				--primary-border-color: rgb(224, 224, 224);
-				--secondary-border-color: var(--primary-border-color);
+				--border-primary: oklch(90.67% 0.0001 271.152);
+				--border-secondary: var(--border-primary);
 
-				--card-bg-color: rgb(255, 255, 255);
-
-				--grey: oklch(0.99 0 0);
+				--grey: oklch(99% 0 0);
 			}
 		}
 
 		@media (prefers-color-scheme: dark) {
 			:root {
-				--bg-color: rgb(0, 0, 0);
+				--surface: var(--black);
+				--surface-container: oklch(20.463% 0.00002 271.152);
 
-				--primary-text-color: rgb(255, 255, 25	5);
-				--secondary-text-color: rgb(163, 163, 163);
-				--error-text-color: rgb(255, 0, 0);
+				--text-primary: var(--white);
+				--text-secondary: oklch(71.547% 0.00008 271.152);
 
-				--primary-border-color: var(--green);
-				--secondary-border-color: rgb(163, 163, 163);
+				--border-primary: var(--green);
+				--border-secondary: var(--text-secondary);
 
-				--card-bg-color: rgb(23, 23, 23);
-
-				--grey: oklch(0.1 0 0);
+				--grey: oklch(10% 0 0);
 			}
 		}
 
 		:root {
 			color-scheme: light dark;
 
+			--text-error: var(--red);
 			--border-radius: 12px;
 
-			--logo-size: 56px;
-			--logo-bg-color: rgb(255, 255, 255);
-
-			--loading-bg-color: rbga(0, 0, 0, 0.08);
-			--loading-bar-color: color-mix(in oklch, var(--green) 45%, transparent);
-
+			--white: oklch(100% 0.00011 271.152);
+			--black: oklch(0% 0 0);
 			--green: oklch(67.122% 0.18384 149.285);
-			--blue: oklch(0.66 0.15 245);
-			--yellow: oklch(0.9 0.12 95);
-			--purple: oklch(0.6 0.14 320);
-			--red: oklch(0.62 0.17 25);
+			--blue: oklch(66% 0.15 245);
+			--yellow: oklch(90% 0.12 95);
+			--purple: oklch(60% 0.14 320);
+			--red: oklch(62% 0.17 25);
 		}
 
 		body {
 			margin: 1rem;
-			background-color: var(--bg-color);
+			background-color: var(--surface);
 			font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif
 		}
 	}

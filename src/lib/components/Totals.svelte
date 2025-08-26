@@ -30,7 +30,7 @@
 
 		.count {
 			font-size: 0.75em;
-			color: var(--secondary-text-color);
+			color: var(--text-secondary);
 		}
 	}
 </style>
