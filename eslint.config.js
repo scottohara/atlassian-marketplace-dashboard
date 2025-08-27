@@ -5,7 +5,7 @@ export default tseslint.config(
 	...oharagroup.svelte,
 	{
 		name: "atlassian-marketplace-dashboard/ignores",
-		ignores: [".svelte-kit"],
+		ignores: [".svelte-kit", "build"],
 	},
 	{
 		name: "atlassian-marketplace-dashboard/base",
