@@ -53,14 +53,8 @@
 				border: 1px solid var(--border-secondary);
 				border-radius: 0.5rem;
 				padding: 0.5rem;
-				width: 98px;
-				min-height: 17px;
 				color: var(--text-primary);
-			}
-
-			input[type="date"]::-webkit-calendar-picker-indicator {
-				display: none;
-				-webkit-appearance: none;
+				appearance: none;
 			}
 		}
 
@@ -78,15 +72,25 @@
 	@media (max-width: 768px) {
 		form {
 			flex-direction: row;
-			gap: 0.5rem;
+			gap: 0.4rem;
 
 			label {
 				flex-direction: column;
 				align-items: start;
+
+				input {
+					width: 85px;
+					height: 19px;
+				}
+
+				input[type="date"]::-webkit-calendar-picker-indicator {
+					display: none;
+					-webkit-appearance: none;
+				}
 			}
 
 			button {
-				min-width: 4rem;
+				min-width: 2.5rem;
 			}
 		}
 	}
