@@ -5,5 +5,11 @@
 	"lang": "en-GB",
 	"start_url": "/",
 	"scope": "/",
-	"display": "standalone"
+	"display": "standalone",
+	"icons": [
+		{
+			"src": "/favicon.ico",
+			"sizes": "48x48"
+		}
+	]
 }
